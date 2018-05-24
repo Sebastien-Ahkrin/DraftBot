@@ -56,6 +56,22 @@ class CommandManager extends Event {
 
   /**
    * @public
+   * @method addCommands
+   * @desc Add all commands
+   * @memberof CommandManager#
+   *
+   * @param {!Array} commands commands [{ name: "", callback: () => {}}]
+   *
+   * @return {void}
+   */
+  addCommands(commands){
+      commands.forEach(object => {
+          addCommand(object.name, object.callback)
+      })
+  }
+
+  /**
+   * @public
    * @method getRegisteredCommands
    * @desc Get the list of all commands registered
    * @memberof CommandManager#

@@ -4,52 +4,37 @@ const Discord = require('discord.js')
 const config = require('./config/prod.json')
 
 const CommandManager = require('./src/command')
-//const TwitterPlugin = require('./src/plugin/twitter')
-const docCmd = require('./src/commands/global/doc')
-const helpCmd = require('./src/commands/global/help')
-const fortniteCmd = require('./src/commands/fun/fortnite')
-const clearCmd = require('./src/commands/moderation/clear')
-const googleCmd = require('./src/commands/global/google')
-const sayCmd = require('./src/commands/moderation/say')
-const pingCmd = require('./src/commands/global/ping')
-const commandeCmd = require('./src/commands/global/commande')
-const quoteCmd = require('./src/commands/global/quote')
-const infosCmd = require('./src/commands/global/infos')
-const playCmd = require('./src/commands/musique/play')
-const skipCmd = require('./src/commands/musique/skip')
-const musiqueCmd = require('./src/commands/musique/musique')
-const pauseCmd = require('./src/commands/musique/pause')
-const resumeCmd = require('./src/commands/musique/resume')
-const stopCmd = require('./src/commands/musique/stop')
-const volumeCmd = require('./src/commands/musique/volume')
-const purgeCmd = require('./src/commands/musique/purge')
-const queueCmd = require('./src/commands/musique/queue')
-const joinCmd = require('./src/commands/musique/join')
-const leaveCmd = require('./src/commands/musique/leave')
+const TwitterPlugin = require('./src/plugin/twitter')
+
 const embeds = require('./src/embeds')
 
+const cmds = require('./src/commands')
+
 const CM = CommandManager.init();
-CM.addCommand('doc', docCmd)
-CM.addCommand('help', helpCmd)
-CM.addCommand('fortnite', fortniteCmd)
-CM.addCommand('clear', clearCmd)
-CM.addCommand('google', googleCmd)
-CM.addCommand('say', sayCmd)
-CM.addCommand('ping', pingCmd)
-CM.addCommand('commande', commandeCmd)
-CM.addCommand('quote', quoteCmd)
-CM.addCommand('infos', infosCmd)
-CM.addCommand('play', playCmd)
-CM.addCommand('skip', skipCmd)
-CM.addCommand('musique', musiqueCmd)
-CM.addCommand('volume', playCmd)
-CM.addCommand('pause', pauseCmd)
-CM.addCommand('resume', resumeCmd)
-CM.addCommand('queue', queueCmd)
-CM.addCommand('purge', purgeCmd)
-CM.addCommand('stop', stopCmd)
-CM.addCommand('join', joinCmd)
-CM.addCommand('leave', leaveCmd)
+
+CM.addCommands([
+    { name: 'doc', callback: cmds.docCmd },
+    { name: 'help', callback: cmds.helpCmd },
+    { name: 'fortnite', callback: cmds.fortniteCmd },
+    { name: 'clear', callback: cmds.clearCmd },
+    { name: 'google', callback: cmds.googleCmd },
+    { name: 'say', callback: cmds.sayCmd },
+    { name: 'commande', callback: cmds.commandeCmd },
+    { name: 'ping', callback: cmds.pingCmd },
+    { name: 'quote', callback: cmds.quoteCmd },
+    { name: 'infos', callback: cmds.infosCmd },
+    { name: 'play', callback: cmds.playCmd },
+    { name: 'skip', callback: cmds.skipCmd },
+    { name: 'musique', callback: cmds.musiqueCmd },
+    { name: 'volume', callback: cmds.playCmd },
+    { name: 'pause', callback: cmds.pauseCmd },
+    { name: 'resume', callback: cmds.resumeCmd },
+    { name: 'queue', callback: cmds.queueCmd },
+    { name: 'purge', callback: cmds.purgeCmd },
+    { name: 'stop', callback: cmds.stopCmd },
+    { name: 'join', callback: cmds.joinCmd },
+    { name: 'leave', callback: cmds.leaveCmd }
+])
 
 const RM = new Event()
 
@@ -113,7 +98,7 @@ DraftBot.on('messageReactionAdd', (messageReaction, user) => {
       };
     }
   }
-};
+});
 
 DraftBot.on('messageUpdate', message => {
   CM.messageHandler(message)

@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 
-module.exports = ({ 
+module.exports = ({
 	message, args: [id]
 }) => {
 	search(message, id)
@@ -21,7 +21,7 @@ const search = async (message, id) => {
                 .setDescription(content)
                 .setTimestamp(createdAt)
                 .setFooter(`${author.username} dans #${channel.name}`, author.displayAvatarURL)
-            
+
             return embed
         })
         .map(embed => message.channel.send({ embed }))

@@ -1,3 +1,6 @@
 {
   "command_char": "!",
+  "youtube_api": "Your key",
+  "token": "Your token",
+  "fortnite_key":"Your key"
 }
