@@ -95,9 +95,13 @@ DraftBot.on('messageReactionAdd', (messageReaction, user) => {
   const member = messageReaction.message.guild.member(user);
   const channel = messageReaction.message.channel;
   if (messageReaction.message.channel === DraftBot.channels.find('name', 'créations')) {
-    member.createDM().then(chan => {
-      chan.send("🗒 | "+user.username+" viens d'ajouter un emoji a votre création !")
-    }).catch(messageReaction.message.channel.send("Hé "+member.author+", tu as désactivé tes messages privés !\nDommage !\nJe voulais t'envoyer un message de bienvenue et pourquoi pas prévoir un rendez-vous chez moi 😉"))
+    try{
+      member.createDM().then(chan => {
+        chan.send("🗒 | "+user.username+" viens d'ajouter un emoji a votre création !")
+      });
+    }catch(){
+      messageReaction.message.channel.send("Hé "+member.author+", tu as désactivé tes messages privés !\nDommage !\nJe voulais t'envoyer un message de bienvenue et pourquoi pas prévoir un rendez-vous chez moi 😉")
+    }
   }
   if(messageReaction.message.embeds[0].description.startWith('Ajoutez une réaction à la musique de votre choix')){
     const id = messageReaction.message.embeds[0].title.substring(32,1);
@@ -107,7 +111,7 @@ DraftBot.on('messageReactionAdd', (messageReaction, user) => {
       if(member.voiceChannel){
         member.voiceChannel.join().then(connexion => {
           const info = playCmd.musics.get(id).get(emoji).split("§");
-          let musicPlayer = guilds[messageReaction.message.guild.id];
+          const musicPlayer = guilds[messageReaction.message.guild.id];
           // title§url§author§image
           musicPlayer.queueSong(new Song(info[0], info[1], 'youtube',  info[2], info[3]));
           msg.channel.send(":musical_note: | La piste `"+info[0]+"` viens d'être ajouté par `"+info[2]+"`");
@@ -117,7 +121,7 @@ DraftBot.on('messageReactionAdd', (messageReaction, user) => {
       };
     }
   }
-});
+};
 
 DraftBot.on('messageUpdate', message => {
   CM.messageHandler(message)
