@@ -63,7 +63,7 @@ class MusicPlayer {
                 if (this.voiceConnection)
                     resolve();
                 else {
-                    msg.channel.send(`Please summon me using ${tool.wrap('!music join')} to start playing the queue.`);
+                    msg.channel.send(`:no_entry_sign: | Veuillez inviter le bot dans votre salon à l'aide du `/join` avant de lancer une musique.`);
                     reject('novoice');
                 }
             });
