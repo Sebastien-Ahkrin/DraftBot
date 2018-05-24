@@ -62,13 +62,9 @@ DraftBot.on('ready', () => {
 
 DraftBot.on('guildMemberAdd', member => {
   member.addRole(member.guild.roles.find("name","Membre"));
-  try{
     member.createDM().then(channel => {
       channel.send(embeds.welcome(member.user))
-    });
-  }catch(e){
-    member.guild.channels.find("name","général").send("Hé "+member.author+", tu as désactivé tes messages privés !\nDommage !\nJe voulais t'envoyer un message de bienvenue et pourquoi pas prévoir un rendez-vous chez moi 😉")
-  }
+    }).catch(()=>member.guild.channels.find("name","général").send("Hé "+member.author+", tu as désactivé tes messages privés !\nDommage !\nJe voulais t'envoyer un message de bienvenue et pourquoi pas prévoir un rendez-vous chez moi 😉"));
 
   DraftBot.channels.find('name', 'logs').send(embeds.join(member.user));
 });
@@ -95,13 +91,9 @@ DraftBot.on('messageReactionAdd', (messageReaction, user) => {
   const member = messageReaction.message.guild.member(user);
   const channel = messageReaction.message.channel;
   if (messageReaction.message.channel === DraftBot.channels.find('name', 'créations')) {
-    try{
       member.createDM().then(chan => {
         chan.send("🗒 | "+user.username+" viens d'ajouter un emoji a votre création !")
-      });
-    }catch(){
-      messageReaction.message.channel.send("Hé "+member.author+", tu as désactivé tes messages privés !\nDommage !\nJe voulais t'envoyer un message de bienvenue et pourquoi pas prévoir un rendez-vous chez moi 😉")
-    }
+      }).catch(()=>messageReaction.message.channel.send("Hé "+member.author+", tu as désactivé tes messages privés !\nDommage !\nJe voulais t'envoyer un message de bienvenue et pourquoi pas prévoir un rendez-vous chez moi 😉"));
   }
   if(messageReaction.message.embeds[0].description.startWith('Ajoutez une réaction à la musique de votre choix')){
     const id = messageReaction.message.embeds[0].title.substring(32,1);
